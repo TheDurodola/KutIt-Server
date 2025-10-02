@@ -1,4 +1,4 @@
-package com.kutit.demo.data.models;
+package com.kutit.yrsd.data.models;
 
 
 import jakarta.validation.constraints.Email;
@@ -30,7 +30,7 @@ public class User {
     @Size(min = 2, max = 40, message = "Lastname must be between 2 and 40 characters")
     private String lastname;
 
-    @NotBlank
+    @NotBlank(message = "Username cannot be blank")
     @Indexed(unique = true)
     @Min(value = 3, message = "Username must be at least 3 characters")
     private String username;

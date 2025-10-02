@@ -1,8 +1,7 @@
-package com.kutit.demo.data.models;
+package com.kutit.yrsd.data.models;
 
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -23,16 +22,12 @@ public class Link {
     @NotBlank(message = "URL cannot be blank")
     private String original;
 
-
     private String shortened;
-
 
     private int clicks;
 
-
     @CreatedDate
     private Instant createdOn;
-
 
     @LastModifiedDate
     private Instant updatedOn;
