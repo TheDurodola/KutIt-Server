@@ -1,6 +1,5 @@
 package com.kutit.yrsd.data.models;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -44,10 +43,8 @@ public class User {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-
     @CreatedDate
     private Instant createdOn;
-
 
     @LastModifiedDate
     private Instant updatedOn;
