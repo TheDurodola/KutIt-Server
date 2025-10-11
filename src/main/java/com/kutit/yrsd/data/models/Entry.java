@@ -1,46 +1,40 @@
 package com.kutit.yrsd.data.models;
 
 
+
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "entries")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
-
+public class Entry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private String original;
 
-    private String firstname;
+    private String shortened;
 
-    private String lastname;
-
-
-    private String username;
+    private long clicks;
 
 
-    private String email;
-
-
-    private String password;
-
-
-    @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
