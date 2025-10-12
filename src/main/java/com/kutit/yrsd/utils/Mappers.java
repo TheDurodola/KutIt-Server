@@ -5,6 +5,7 @@ import com.kutit.yrsd.data.models.User;
 import com.kutit.yrsd.dtos.requests.CreateEntryRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
 import com.kutit.yrsd.dtos.responses.CreateEntryResponse;
+import com.kutit.yrsd.dtos.responses.LoginUserResponse;
 import com.kutit.yrsd.dtos.responses.RegisterUserResponse;
 
 
@@ -31,6 +32,18 @@ public class Mappers {
         response.setFullName(user.getFirstname() + " " + user.getLastname());
         return response;
     }
+
+
+    public static LoginUserResponse mapUserToLoginUserResponse(User user) {
+        LoginUserResponse response = new LoginUserResponse();
+        response.setEmail(user.getEmail());
+        response.setUsername(user.getUsername());
+        response.setFullName(user.getFirstname() + " " + user.getLastname());
+        response.setFirstName(user.getFirstname());
+        response.setLastName(user.getLastname());
+        return response;
+    }
+
 
     public static User map(RegisterUserRequest register) {
         User user = new User();

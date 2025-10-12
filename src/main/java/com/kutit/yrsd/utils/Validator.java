@@ -29,13 +29,14 @@ public class Validator {
     private static void validateUsername(RegisterUserRequest request) {
         if (request.getUsername().isBlank()) throw new InvalidUsernameFormat("Username field cannot be empty");
         if (request.getUsername().length() < 5) throw new InvalidUsernameFormat("Username length must be at least 5");
-//        if (!isValidUsername(request.getUsername())) throw new InvalidUsernameFormat("Invalid username");
+        if (!isValidUsername(request.getUsername())) throw new InvalidUsernameFormat("Invalid username");
     }
 
     private static void validatePassword(RegisterUserRequest request) {
+        if (request.getPassword().equals("password")|| request.getPassword().equals("PASSWORD")) throw new InvalidPasswordFormat("Password cannot be 'password' or 'PASSWORD'");
         if (request.getPassword().isBlank()) throw new InvalidPasswordFormat("Password field cannot be empty");
         if (request.getPassword().length() < 6) throw new InvalidPasswordFormat("Password length must be at least 6");
-//        if (!isValidPassword(request.getPassword())) throw new InvalidPasswordFormat("Invalid Password format");
+        if (!isValidPassword(request.getPassword())) throw new InvalidPasswordFormat("Invalid Password format");
     }
 
     private static void validateName(RegisterUserRequest request) {
@@ -77,15 +78,15 @@ public class Validator {
         return LAST_PATTERN.matcher(string).matches();
     }
 
-//    private static boolean isValidPassword(String string) {
-//        Pattern LAST_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{6,}$");
-//        return LAST_PATTERN.matcher(string).matches();
-//    }
+    private static boolean isValidPassword(String string) {
+        Pattern LAST_PATTERN = Pattern.compile("^[A-Za-z0-9._$@%&!]{6,}$");
+        return LAST_PATTERN.matcher(string).matches();
+    }
 
 
-//    private static boolean isValidUsername(String string) {
-//        Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z][A-Za-z0-9._-]{2,19}$\n");
-//        return USERNAME_PATTERN.matcher(string).matches();
-//    }
+    private static boolean isValidUsername(String string) {
+        Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z][A-Za-z0-9._-]{2,19}$");
+        return USERNAME_PATTERN.matcher(string).matches();
+    }
 
 }
