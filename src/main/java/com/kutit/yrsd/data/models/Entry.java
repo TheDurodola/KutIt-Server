@@ -4,6 +4,8 @@ package com.kutit.yrsd.data.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
@@ -20,17 +22,22 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String original;
+    @Column(name = "original_link", nullable = false, updatable = false)
+    private String originalLink;
 
-    private String shortened;
+    @Column(name = "shortened_link", nullable = false)
+    private String shortenedLink;
 
-    private long clicks;
+    @Column(name = "click", nullable = false)
+    private long click;
 
 
     @Column(name = "created_at", nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @ManyToOne()

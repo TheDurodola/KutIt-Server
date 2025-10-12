@@ -4,7 +4,14 @@ import com.kutit.yrsd.data.models.Entry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface Entries extends JpaRepository<Entry,String> {
-    Entry findByShortened(String shortened);
+    Optional<Entry> findByShortenedLink(String shortenedLink);
+    Optional<Entry> findByOriginalLink(String originalLink);
+    List<Entry> findByUpdatedAtBefore(LocalDateTime dateTime);
+
 }
