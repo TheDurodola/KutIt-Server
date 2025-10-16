@@ -1,7 +1,5 @@
 package com.kutit.yrsd.data.models;
 
-
-
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,11 +16,17 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class Entry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 
-    @Column(name = "original_link", nullable = false, updatable = false)
+    @Id
+    private String id;
+
+    @Column(name = "original_link", nullable = false, updatable = true)
     private String originalLink;
 
     @Column(name = "shortened_link", nullable = false)
@@ -30,7 +34,6 @@ public class Entry {
 
     @Column(name = "click", nullable = false)
     private long click;
-
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate

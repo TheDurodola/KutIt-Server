@@ -1,6 +1,7 @@
 package com.kutit.yrsd.utils;
 
 import com.kutit.yrsd.dtos.requests.CreateEntryRequest;
+import com.kutit.yrsd.dtos.requests.CreateUserEntryRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
 import com.kutit.yrsd.exceptions.*;
 
@@ -19,12 +20,24 @@ public class Validator {
         }
     }
 
+    public static void validate(CreateUserEntryRequest request) {
+        String link = request.getOriginalLink();
+        Pattern pattern = Pattern.compile(
+                "^(?i)(?:https?://)?(?:(?:[a-z0-9-]+\\.)+[a-z]{2,}|localhost)(?::\\d+)?(?:/\\S*)?$"
+        );
+
+        if(!pattern.matcher(link).matches()){
+            throw new InvalidLinkFormatException("Invalid URL. Kindly Check your URL");
+        }
+    }
+
     public static void validate(RegisterUserRequest request){
         validateEmail(request);
         validateName(request);
         validatePassword(request);
         validateUsername(request);
     }
+
 
     private static void validateUsername(RegisterUserRequest request) {
         if (request.getUsername().isBlank()) throw new InvalidUsernameFormat("Username field cannot be empty");
@@ -62,7 +75,6 @@ public class Validator {
         if (!isValidEmail(request.getEmail())) throw new InvalidEmailFormat("Invalid Email");
     }
 
-
     private static boolean isValidEmail(String string) {
         Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         return EMAIL_PATTERN.matcher(string).matches();
@@ -82,7 +94,6 @@ public class Validator {
         Pattern LAST_PATTERN = Pattern.compile("^[A-Za-z0-9._$@%&!]{6,}$");
         return LAST_PATTERN.matcher(string).matches();
     }
-
 
     private static boolean isValidUsername(String string) {
         Pattern USERNAME_PATTERN = Pattern.compile("^[A-Za-z][A-Za-z0-9._-]{2,19}$");

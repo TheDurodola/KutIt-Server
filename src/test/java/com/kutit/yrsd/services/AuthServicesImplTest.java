@@ -1,6 +1,7 @@
 package com.kutit.yrsd.services;
 
 import com.kutit.yrsd.data.models.User;
+import com.kutit.yrsd.data.repositories.Entries;
 import com.kutit.yrsd.data.repositories.Users;
 import com.kutit.yrsd.dtos.requests.LoginUserRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
@@ -24,8 +25,12 @@ class AuthServicesImplTest {
     @Autowired
     Users users;
 
+    @Autowired
+    Entries entries;
+
     @BeforeEach
     void setUp() {
+        entries.deleteAll();
         users.deleteAll();
     }
 
@@ -281,10 +286,6 @@ class AuthServicesImplTest {
         login.setIdentifier("lord_boj");
         login.setPassword("Password1!");
         assertThrows(UserDoesntExistException.class, ()->authServices.login(login));
-
-
-
     }
-
 
 }

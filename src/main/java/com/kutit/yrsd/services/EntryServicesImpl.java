@@ -18,7 +18,6 @@ import static com.kutit.yrsd.utils.Validator.validate;
 @Service
 public class EntryServicesImpl implements EntryServices {
 
-
     @Autowired
     Entries entries;
 

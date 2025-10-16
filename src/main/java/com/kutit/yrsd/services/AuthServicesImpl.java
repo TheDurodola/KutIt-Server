@@ -57,7 +57,6 @@ public class AuthServicesImpl implements AuthServices {
         throw new UserDoesntExistException("Invalid login credentials");
     }
 
-
     private static void cleanData(LoginUserRequest request) {
         request.setIdentifier(request.getIdentifier().toLowerCase().trim());
     }

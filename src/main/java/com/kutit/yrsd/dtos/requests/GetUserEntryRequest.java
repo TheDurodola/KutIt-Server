@@ -3,4 +3,6 @@ import lombok.Data;
 
 @Data
 public class GetUserEntryRequest {
+
+    private String entryId;
 }

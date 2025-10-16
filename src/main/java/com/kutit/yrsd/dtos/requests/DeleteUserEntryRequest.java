@@ -3,4 +3,6 @@ import lombok.Data;
 
 @Data
 public class DeleteUserEntryRequest {
+    private String userId;
+    private String entryId;
 }
