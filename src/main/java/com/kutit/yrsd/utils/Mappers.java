@@ -37,6 +37,7 @@ public class Mappers {
 
     public static LoginUserResponse mapUserToLoginUserResponse(User user) {
         LoginUserResponse response = new LoginUserResponse();
+        response.setId(user.getId());
         response.setEmail(user.getEmail());
         response.setUsername(user.getUsername());
         response.setFullName(user.getFirstname() + " " + user.getLastname());

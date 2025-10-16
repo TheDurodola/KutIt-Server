@@ -117,7 +117,7 @@ class AuthServicesImplTest {
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidEmailFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidEmailFormatException.class, ()-> authServices.register(register));
     }
 
     @Test
@@ -128,27 +128,27 @@ class AuthServicesImplTest {
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidPasswordFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidPasswordFormatException.class, ()-> authServices.register(register));
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("12345");
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidPasswordFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidPasswordFormatException.class, ()-> authServices.register(register));
 
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("password");
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidPasswordFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidPasswordFormatException.class, ()-> authServices.register(register));
 
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("    23  ");
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidPasswordFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidPasswordFormatException.class, ()-> authServices.register(register));
 
     }
 
@@ -160,14 +160,14 @@ class AuthServicesImplTest {
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("Lo");
-        assertThrows(InvalidUsernameFormat.class, () -> authServices.register(register));
+        assertThrows(InvalidUsernameFormatException.class, () -> authServices.register(register));
 
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("Password123$");
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Bo#j ");
-        assertThrows(InvalidUsernameFormat.class, () -> authServices.register(register));
+        assertThrows(InvalidUsernameFormatException.class, () -> authServices.register(register));
 
     }
 
@@ -179,26 +179,26 @@ class AuthServicesImplTest {
         register.setFirstName("a");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidNameFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidNameFormatException.class, ()-> authServices.register(register));
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("Password123$");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidNameFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidNameFormatException.class, ()-> authServices.register(register));
 
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("Password123$");
         register.setLastName("dU");
         register.setFirstName("aBOLaji");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidNameFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidNameFormatException.class, ()-> authServices.register(register));
 
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("Password123$");
         register.setFirstName("aBOLaji");
         register.setLastName("#########");
         register.setUsername("LorD_Boj ");
-        assertThrows(InvalidNameFormat.class, ()-> authServices.register(register));
+        assertThrows(InvalidNameFormatException.class, ()-> authServices.register(register));
     }
 
     @Test

@@ -97,8 +97,6 @@ public class UserServicesImpl implements UserServices {
         throw new UserDoesntExistException("No User found");
     }
 
-
-
     @Override
     public GetUserAccountResponse getUserAccount(GetUserAccountRequest request) {
         if (users.findById(request.getUserId()).isPresent()){

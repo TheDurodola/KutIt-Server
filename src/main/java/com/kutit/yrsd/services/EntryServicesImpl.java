@@ -6,7 +6,7 @@ import com.kutit.yrsd.dtos.requests.CreateEntryRequest;
 import com.kutit.yrsd.dtos.requests.GetEntryRequest;
 import com.kutit.yrsd.dtos.responses.CreateEntryResponse;
 import com.kutit.yrsd.dtos.responses.GetEntryResponse;
-import com.kutit.yrsd.exceptions.InvalidShortenLink;
+import com.kutit.yrsd.exceptions.InvalidShortenLinkException;
 import com.kutit.yrsd.utils.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class EntryServicesImpl implements EntryServices {
             return response;
         }
 
-        throw new InvalidShortenLink("Shorten Link doesn't exists");
+        throw new InvalidShortenLinkException("Shorten Link doesn't exists");
     }
 
 

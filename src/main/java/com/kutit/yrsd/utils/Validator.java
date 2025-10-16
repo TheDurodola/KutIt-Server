@@ -49,16 +49,16 @@ public class Validator {
 
 
     private static void validateUsername(UpdateUserAccountRequest request) {
-        if (request.getUsername().isBlank()) throw new InvalidUsernameFormat("Username field cannot be empty");
-        if (request.getUsername().length() < 5) throw new InvalidUsernameFormat("Username length must be at least 5");
-        if (isValidUsername(request.getUsername())) throw new InvalidUsernameFormat("Invalid username");
+        if (request.getUsername().isBlank()) throw new InvalidUsernameFormatException("Username field cannot be empty");
+        if (request.getUsername().length() < 5) throw new InvalidUsernameFormatException("Username length must be at least 5");
+        if (isValidUsername(request.getUsername())) throw new InvalidUsernameFormatException("Invalid username");
     }
 
     private static void validatePassword(UpdateUserAccountRequest request) {
-        if (request.getNewPassword().equals("password")|| request.getNewPassword().equals("PASSWORD")) throw new InvalidPasswordFormat("Password cannot be 'password' or 'PASSWORD'");
-        if (request.getNewPassword().isBlank()) throw new InvalidPasswordFormat("Password field cannot be empty");
-        if (request.getNewPassword().length() < 6) throw new InvalidPasswordFormat("Password length must be at least 6");
-        if (isValidPassword(request.getNewPassword())) throw new InvalidPasswordFormat("Invalid Password format");
+        if (request.getNewPassword().equals("password")|| request.getNewPassword().equals("PASSWORD")) throw new InvalidPasswordFormatException("Password cannot be 'password' or 'PASSWORD'");
+        if (request.getNewPassword().isBlank()) throw new InvalidPasswordFormatException("Password field cannot be empty");
+        if (request.getNewPassword().length() < 6) throw new InvalidPasswordFormatException("Password length must be at least 6");
+        if (isValidPassword(request.getNewPassword())) throw new InvalidPasswordFormatException("Invalid Password format");
     }
 
     private static void validateName(UpdateUserAccountRequest request) {
@@ -67,35 +67,36 @@ public class Validator {
     }
 
     private static void validateLastname(UpdateUserAccountRequest request) {
-        if (request.getLastName().isBlank()) throw new InvalidNameFormat("Lastname field cannot be empty");
-        if (request.getLastName().length() < 3) throw new InvalidNameFormat("Lastname length must be at least 3");
-        if (isValidLastname(request.getLastName())) throw new InvalidNameFormat("Kindly check your lastname");
+        if (request.getLastName().isBlank()) throw new InvalidNameFormatException("Lastname field cannot be empty");
+        if (request.getLastName().length() < 3) throw new InvalidNameFormatException("Lastname length must be at least 3");
+        if (isValidLastname(request.getLastName())) throw new InvalidNameFormatException("Kindly check your lastname");
     }
 
     private static void validateFirstname(UpdateUserAccountRequest request) {
-        if (request.getFirstName().isBlank()) throw new InvalidNameFormat("Firstname field cannot be empty");
-        if (request.getFirstName().length() < 3) throw new InvalidNameFormat("Firstname length must be at least 3");
-        if (isValidFirstname(request.getFirstName())) throw new InvalidNameFormat("Kindly check your firstname");
+        if (request.getFirstName().isBlank()) throw new InvalidNameFormatException("Firstname field cannot be empty");
+        if (request.getFirstName().length() < 3) throw new InvalidNameFormatException("Firstname length must be at least 3");
+        if (isValidFirstname(request.getFirstName())) throw new InvalidNameFormatException("Kindly check your firstname");
     }
 
     private static void validateEmail(UpdateUserAccountRequest request) {
-        if (request.getEmail().isBlank()) throw new InvalidEmailFormat("Email Field cannot be empty");
-        if (!request.getEmail().contains("@")) throw new InvalidEmailFormat("Email is missing @");
-        if (isValidEmail(request.getEmail())) throw new InvalidEmailFormat("Invalid Email");
+        if (request.getEmail().isBlank()) throw new InvalidEmailFormatException("Email Field cannot be empty");
+        if (!request.getEmail().contains(".")) throw new InvalidEmailFormatException("Email is missing .");
+        if (!request.getEmail().contains("@")) throw new InvalidEmailFormatException("Email is missing @");
+        if (isValidEmail(request.getEmail())) throw new InvalidEmailFormatException("Invalid Email");
     }
 
 
     private static void validateUsername(RegisterUserRequest request) {
-        if (request.getUsername().isBlank()) throw new InvalidUsernameFormat("Username field cannot be empty");
-        if (request.getUsername().length() < 5) throw new InvalidUsernameFormat("Username length must be at least 5");
-        if (isValidUsername(request.getUsername())) throw new InvalidUsernameFormat("Invalid username");
+        if (request.getUsername().isBlank()) throw new InvalidUsernameFormatException("Username field cannot be empty");
+        if (request.getUsername().length() < 5) throw new InvalidUsernameFormatException("Username length must be at least 5");
+        if (isValidUsername(request.getUsername())) throw new InvalidUsernameFormatException("Invalid username");
     }
 
     private static void validatePassword(RegisterUserRequest request) {
-        if (request.getPassword().equals("password")|| request.getPassword().equals("PASSWORD")) throw new InvalidPasswordFormat("Password cannot be 'password' or 'PASSWORD'");
-        if (request.getPassword().isBlank()) throw new InvalidPasswordFormat("Password field cannot be empty");
-        if (request.getPassword().length() < 6) throw new InvalidPasswordFormat("Password length must be at least 6");
-        if (isValidPassword(request.getPassword())) throw new InvalidPasswordFormat("Invalid Password format");
+        if (request.getPassword().equals("password")|| request.getPassword().equals("PASSWORD")) throw new InvalidPasswordFormatException("Password cannot be 'password' or 'PASSWORD'");
+        if (request.getPassword().isBlank()) throw new InvalidPasswordFormatException("Password field cannot be empty");
+        if (request.getPassword().length() < 6) throw new InvalidPasswordFormatException("Password length must be at least 6");
+        if (isValidPassword(request.getPassword())) throw new InvalidPasswordFormatException("Invalid Password format");
     }
 
     private static void validateName(RegisterUserRequest request) {
@@ -104,21 +105,21 @@ public class Validator {
     }
 
     private static void validateLastname(RegisterUserRequest request) {
-        if (request.getLastName().isBlank()) throw new InvalidNameFormat("Lastname field cannot be empty");
-        if (request.getLastName().length() < 3) throw new InvalidNameFormat("Lastname length must be at least 3");
-        if (isValidLastname(request.getLastName())) throw new InvalidNameFormat("Kindly check your lastname");
+        if (request.getLastName().isBlank()) throw new InvalidNameFormatException("Lastname field cannot be empty");
+        if (request.getLastName().length() < 3) throw new InvalidNameFormatException("Lastname length must be at least 3");
+        if (isValidLastname(request.getLastName())) throw new InvalidNameFormatException("Kindly check your lastname");
     }
 
     private static void validateFirstname(RegisterUserRequest request) {
-        if (request.getFirstName().isBlank()) throw new InvalidNameFormat("Firstname field cannot be empty");
-        if (request.getFirstName().length() < 3) throw new InvalidNameFormat("Firstname length must be at least 3");
-        if (isValidFirstname(request.getFirstName())) throw new InvalidNameFormat("Kindly check your firstname");
+        if (request.getFirstName().isBlank()) throw new InvalidNameFormatException("Firstname field cannot be empty");
+        if (request.getFirstName().length() < 3) throw new InvalidNameFormatException("Firstname length must be at least 3");
+        if (isValidFirstname(request.getFirstName())) throw new InvalidNameFormatException("Kindly check your firstname");
     }
 
     private static void validateEmail(RegisterUserRequest request) {
-        if (request.getEmail().isBlank()) throw new InvalidEmailFormat("Email Field cannot be empty");
-        if (!request.getEmail().contains("@")) throw new InvalidEmailFormat("Email is missing @");
-        if (isValidEmail(request.getEmail())) throw new InvalidEmailFormat("Invalid Email");
+        if (request.getEmail().isBlank()) throw new InvalidEmailFormatException("Email Field cannot be empty");
+        if (!request.getEmail().contains("@")) throw new InvalidEmailFormatException("Email is missing @");
+        if (isValidEmail(request.getEmail())) throw new InvalidEmailFormatException("Invalid Email");
     }
 
 

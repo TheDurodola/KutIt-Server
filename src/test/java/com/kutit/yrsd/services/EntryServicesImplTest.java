@@ -1,13 +1,12 @@
 package com.kutit.yrsd.services;
 
-import com.kutit.yrsd.data.models.Entry;
 import com.kutit.yrsd.data.repositories.Entries;
 import com.kutit.yrsd.dtos.requests.CreateEntryRequest;
 import com.kutit.yrsd.dtos.requests.GetEntryRequest;
 import com.kutit.yrsd.dtos.responses.CreateEntryResponse;
 import com.kutit.yrsd.dtos.responses.GetEntryResponse;
 import com.kutit.yrsd.exceptions.InvalidLinkFormatException;
-import com.kutit.yrsd.exceptions.InvalidShortenLink;
+import com.kutit.yrsd.exceptions.InvalidShortenLinkException;
 import com.kutit.yrsd.utils.ShortLinkGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,7 +113,7 @@ class EntryServicesImplTest {
     void attemptToRetrieveOriginalLinkUsingTheShortenedLinkThatDoesNotExist(){
         GetEntryRequest getEntryRequest = new GetEntryRequest();
         getEntryRequest.setShortendLink("e3hTs5Y");
-        assertThrows(InvalidShortenLink.class, ()-> services.getEntry(getEntryRequest));
+        assertThrows(InvalidShortenLinkException.class, ()-> services.getEntry(getEntryRequest));
     }
 
     @Test
