@@ -363,6 +363,29 @@ class UserServicesImplTest {
     }
 
 
+    @Test
+    void attemptToUpdateEntryWithWrongEntryIdThrowsEntryException(){
+        RegisterUserRequest register = new RegisterUserRequest();
+        register.setEmail("bolajidurodola@gmail.com");
+        register.setPassword("Password1!");
+        register.setFirstName("Abolaji");
+        register.setLastName("Durodola");
+        register.setUsername("lord_boj");
+        RegisterUserResponse response = authServices.register(register);
+
+        CreateUserEntryRequest request = new CreateUserEntryRequest();
+        request.setOriginalLink("https://developer.mozilla.org/en-US/docs/Web/JavaScript");
+        request.setUserId(response.getId());
+        CreateUserEntryResponse createUserEntryResponse = userServices.createUserEntry(request);
+
+        UpdateUserEntryRequest updateUserEntryRequest = new UpdateUserEntryRequest();
+        updateUserEntryRequest.setUserId(response.getId());
+        updateUserEntryRequest.setEntryId("test");
+        updateUserEntryRequest.setOriginalLink("https://nodejs.org/docs/latest/api/");
+        assertThrows(EntryDoesntExistException.class , () -> userServices.updateUserEntry(updateUserEntryRequest));
+    }
+
+
 
     @Test
     void createAccount_ChangeAccountDetails(){
@@ -461,5 +484,61 @@ class UserServicesImplTest {
         getUserAccountRequest.setUserId("test");
         assertThrows(UserDoesntExistException.class, () -> userServices.getUserAccount(getUserAccountRequest));
 
+    }
+
+    @Test
+    void createAccount_DeleteAccount() {
+        RegisterUserRequest register = new RegisterUserRequest();
+        register.setEmail("bolajidurodola@gmail.com");
+        register.setPassword("Password1!");
+        register.setFirstName("Abolaji");
+        register.setLastName("Durodola");
+        register.setUsername("lord_boj");
+        RegisterUserResponse response = authServices.register(register);
+        assertEquals(1, users.count());
+
+
+        DeleteUserAccountRequest request = new DeleteUserAccountRequest();
+        request.setUserId(response.getId());
+        request.setPassword("Password1!");
+        userServices.deleteUserAccount(request);
+        assertEquals(0, users.count());
+    }
+
+    @Test
+    void attemptToDeleteAccountWithUnregisteredUserThrowsUserDoesntExistException() {
+        RegisterUserRequest register = new RegisterUserRequest();
+        register.setEmail("bolajidurodola@gmail.com");
+        register.setPassword("Password1!");
+        register.setFirstName("Abolaji");
+        register.setLastName("Durodola");
+        register.setUsername("lord_boj");
+        RegisterUserResponse response = authServices.register(register);
+        assertEquals(1, users.count());
+
+
+        DeleteUserAccountRequest request = new DeleteUserAccountRequest();
+        request.setUserId("test");
+        request.setPassword("Password1!");
+        assertThrows(UserDoesntExistException.class, ()-> userServices.deleteUserAccount(request));
+    }
+
+
+    @Test
+    void attemptToDeleteAccountWithAnIncorrectPasswordThrowsIncorrectPasswordException() {
+        RegisterUserRequest register = new RegisterUserRequest();
+        register.setEmail("bolajidurodola@gmail.com");
+        register.setPassword("Password1!");
+        register.setFirstName("Abolaji");
+        register.setLastName("Durodola");
+        register.setUsername("lord_boj");
+        RegisterUserResponse response = authServices.register(register);
+        assertEquals(1, users.count());
+
+
+        DeleteUserAccountRequest request = new DeleteUserAccountRequest();
+        request.setUserId(response.getId());
+        request.setPassword("Password");
+        assertThrows(IncorrectUserPasswordException.class, ()-> userServices.deleteUserAccount(request));
     }
 }

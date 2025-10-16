@@ -85,15 +85,10 @@ public class UserServicesImpl implements UserServices {
         throw new UserDoesntExistException("No User found");
     }
 
-    private static void mapEntryToUpdatedUserEntryResponse(UpdateUserEntryResponse response, Entry updatedEntry) {
-        response.setEntryId(updatedEntry.getId());
-        response.setMessage("Entry updated successfully");
-        response.setOriginalLink(updatedEntry.getOriginalLink());
-        response.setShortenedLink(updatedEntry.getShortenedLink());
-    }
-
     @Override
     public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest request) {
+        validate(request);
+
         if (users.findById(request.getId()).isPresent()){
             User user = getUser(request);
             User updatedUser = users.save(user);
@@ -101,6 +96,33 @@ public class UserServicesImpl implements UserServices {
         }
         throw new UserDoesntExistException("No User found");
     }
+
+
+
+    @Override
+    public GetUserAccountResponse getUserAccount(GetUserAccountRequest request) {
+        if (users.findById(request.getUserId()).isPresent()){
+            User user = users.findById(request.getUserId()).get();
+            return mapUserToGetUserAccountResponse(user);
+        }
+        throw new UserDoesntExistException("No User found");
+    }
+
+    @Override
+    public DeleteUserAccountResponse deleteUserAccount(DeleteUserAccountRequest request) {
+        DeleteUserAccountResponse response = new DeleteUserAccountResponse();
+        if(users.findById(request.getUserId()).isPresent()) {
+            User user = users.findById(request.getUserId()).get();
+            if(!PasswordHasher.matches(request.getPassword(), user.getPassword())) {
+                throw new IncorrectUserPasswordException("Incorrect Password");
+            }
+            users.delete(user);
+            response.setMessage("User account deleted successfully");
+            return response;
+        }
+        throw new UserDoesntExistException("No User found");
+    }
+
 
     private User getUser(UpdateUserAccountRequest request) {
         User user = users.findById(request.getId()).get();
@@ -124,15 +146,6 @@ public class UserServicesImpl implements UserServices {
         return response;
     }
 
-    @Override
-    public GetUserAccountResponse getUserAccount(GetUserAccountRequest request) {
-        if (users.findById(request.getUserId()).isPresent()){
-            User user = users.findById(request.getUserId()).get();
-            return mapUserToGetUserAccountResponse(user);
-        }
-        throw new UserDoesntExistException("No User found");
-    }
-
     private GetUserAccountResponse mapUserToGetUserAccountResponse(User user) {
         GetUserAccountResponse response = new GetUserAccountResponse();
         response.setFirstName(user.getFirstname());
@@ -141,12 +154,6 @@ public class UserServicesImpl implements UserServices {
         response.setUsername(user.getUsername());
         return response;
     }
-
-    @Override
-    public DeleteUserAccountResponse deleteUserAccount(DeleteUserAccountRequest request) {
-        return null;
-    }
-
 
     private void verifyUserEntryRelation(DeleteUserEntryRequest request) {
         User user;
@@ -174,5 +181,12 @@ public class UserServicesImpl implements UserServices {
 
         if(!user.getId().equals(entry.getUser().getId())) throw new UnauthorizedUserException("This Entry doesn't belong to this User");
 
+    }
+
+    private static void mapEntryToUpdatedUserEntryResponse(UpdateUserEntryResponse response, Entry updatedEntry) {
+        response.setEntryId(updatedEntry.getId());
+        response.setMessage("Entry updated successfully");
+        response.setOriginalLink(updatedEntry.getOriginalLink());
+        response.setShortenedLink(updatedEntry.getShortenedLink());
     }
 }
