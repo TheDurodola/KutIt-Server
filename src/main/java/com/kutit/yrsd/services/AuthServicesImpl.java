@@ -6,9 +6,7 @@ import com.kutit.yrsd.dtos.requests.LoginUserRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
 import com.kutit.yrsd.dtos.responses.LoginUserResponse;
 import com.kutit.yrsd.dtos.responses.RegisterUserResponse;
-import com.kutit.yrsd.exceptions.EmailAlreadyExistsException;
-import com.kutit.yrsd.exceptions.UserDoesntExistException;
-import com.kutit.yrsd.exceptions.UsernameAlreadyExistsException;
+import com.kutit.yrsd.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,21 +38,23 @@ public class AuthServicesImpl implements AuthServices {
 
     @Override
     public LoginUserResponse login(LoginUserRequest request) {
+        if (request.getIdentifier().isBlank()) throw new InvalidEmailOrUsernameFormatException("Email/Username can't be empty");
+        if (request.getPassword().isBlank()) throw new InvalidPasswordFormatException("Password can't be empty");
         cleanData(request);
         if(users.findByUsername(request.getIdentifier()).isPresent()){
             User user = users.findByUsername(request.getIdentifier()).get();
             if(matches(request.getPassword(), user.getPassword())){
                 return mapUserToLoginUserResponse(user);
-            }
+            }else throw new IncorrectUserPasswordException("Incorrect Password");
         }
         if (users.findByEmail(request.getIdentifier()).isPresent()) {
             User user = users.findByEmail(request.getIdentifier()).get();
             if(matches(request.getPassword(), user.getPassword())){
                 return mapUserToLoginUserResponse(user);
-            }
+            }else throw new IncorrectUserPasswordException("Incorrect Password");
         }
 
-        throw new UserDoesntExistException("Invalid login credentials");
+        throw new UserDoesntExistException("Invalid Email/Username Credentials");
     }
 
     private static void cleanData(LoginUserRequest request) {
@@ -62,6 +62,8 @@ public class AuthServicesImpl implements AuthServices {
     }
 
     private static void dataCleaner(RegisterUserRequest request) {
+        if (request.getFirstName().isBlank()) throw new InvalidNameFormatException("First name can't be empty");
+        if (request.getLastName().isBlank()) throw new InvalidNameFormatException("Last name can't be empty");
         request.setEmail(request.getEmail().toLowerCase().trim());
         request.setPassword(request.getPassword().trim());
         request.setUsername(request.getUsername().toLowerCase().trim());

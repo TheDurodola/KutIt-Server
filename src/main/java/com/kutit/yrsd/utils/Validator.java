@@ -5,9 +5,11 @@ import com.kutit.yrsd.dtos.requests.CreateUserEntryRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
 import com.kutit.yrsd.dtos.requests.UpdateUserAccountRequest;
 import com.kutit.yrsd.exceptions.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.regex.Pattern;
 
+@Slf4j
 public class Validator {
 
     public static void validate(CreateEntryRequest request) {
@@ -62,6 +64,7 @@ public class Validator {
     }
 
     private static void validateName(UpdateUserAccountRequest request) {
+
         validateFirstname(request);
         validateLastname(request);
     }
@@ -100,6 +103,7 @@ public class Validator {
     }
 
     private static void validateName(RegisterUserRequest request) {
+        log.info("Validating name");
         validateFirstname(request);
         validateLastname(request);
     }

@@ -3,6 +3,7 @@ package com.kutit.yrsd.controllers;
 import com.kutit.yrsd.dtos.requests.LoginUserRequest;
 import com.kutit.yrsd.dtos.requests.RegisterUserRequest;
 import com.kutit.yrsd.dtos.responses.LoginUserResponse;
+import com.kutit.yrsd.exceptions.UserNotLoggedInException;
 import com.kutit.yrsd.services.AuthServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpSession session) {
+        try {
+            session.getId();
+        }catch (IllegalStateException e){
+            throw new UserNotLoggedInException("No active session");
+        }
         session.invalidate();
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Logout Successful");

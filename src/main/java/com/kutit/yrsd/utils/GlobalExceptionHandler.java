@@ -120,6 +120,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
     }
 
+    @ExceptionHandler(InvalidEmailOrUsernameFormatException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidEmailOrUsernameFormatException(InvalidEmailOrUsernameFormatException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("field", "username/email");
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
+    }
+
+    @ExceptionHandler(UserNotLoggedInException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotLoggedInException(UserNotLoggedInException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("field", "user");
+        errors.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleException(Exception ex) {
