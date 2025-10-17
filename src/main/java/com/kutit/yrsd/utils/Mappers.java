@@ -58,6 +58,7 @@ public class Mappers {
 
     public static GetUserEntryResponse mapEntryToGetUserEntryResponse(Entry entry) {
         GetUserEntryResponse response = new GetUserEntryResponse();
+        response.setId(entry.getId());
         response.setOriginalLink(entry.getOriginalLink());
         response.setShortenedLink(entry.getShortenedLink());
         response.setCreatedAt(entry.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));

@@ -34,7 +34,7 @@ public class EntryController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Success");
         map.put("response", entryServices.getEntry(request));
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity<>(map, HttpStatus.FOUND);
     }
 }
 
