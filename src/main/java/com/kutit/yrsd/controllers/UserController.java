@@ -41,8 +41,10 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatus.FOUND);
     }
 
-    @DeleteMapping("/entry")
-    public ResponseEntity<?> deleteEntry(@RequestBody DeleteUserEntryRequest request, HttpSession session) {
+    @DeleteMapping("/entry/{id}")
+    public ResponseEntity<?> deleteEntry(@PathVariable String id, HttpSession session) {
+        DeleteUserEntryRequest request = new DeleteUserEntryRequest();
+        request.setEntryId(id);
         try {
             request.setUserId(session.getAttribute("id").toString());
         }catch (IllegalStateException | IllegalMonitorStateException | NullPointerException e){
@@ -78,7 +80,7 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Success");
         map.put("response", userServices.getAllUserEntries(request));
-        return new ResponseEntity<>(map, HttpStatus.FOUND);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @DeleteMapping("/account")

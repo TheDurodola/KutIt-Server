@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 
+@RequestMapping("api/v1")
 public class EntryController {
 
     @Autowired
@@ -34,7 +35,7 @@ public class EntryController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Success");
         map.put("response", entryServices.getEntry(request));
-        return new ResponseEntity<>(map, HttpStatus.FOUND);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
 

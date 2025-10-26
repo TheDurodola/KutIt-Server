@@ -128,6 +128,8 @@ class AuthServicesImplTest {
         register.setFirstName("aBOLaji");
         register.setLastName("dUROdolA");
         register.setUsername("LorD_Boj ");
+
+
         assertThrows(InvalidPasswordFormatException.class, ()-> authServices.register(register));
         register.setEmail("bolajidurodola@Gmail.com ");
         register.setPassword("12345");
@@ -244,14 +246,19 @@ class AuthServicesImplTest {
 
     @Test
     void testThatPasswordIsntSavedAsPlainText() {
-        RegisterUserRequest register = new RegisterUserRequest();
-        register.setEmail("bolajidurodola@gmail.com");
-        register.setPassword("Password1!");
-        register.setFirstName("Abolaji");
-        register.setLastName("Durodola");
-        register.setUsername("lord_boj");
-        RegisterUserResponse response = authServices.register(register);
+        //Arrange
+        RegisterUserRequest request = new RegisterUserRequest();
+        request.setEmail("bolajidurodola@gmail.com");
+        request.setPassword("Password1!");
+        request.setFirstName("Abolaji");
+        request.setLastName("Durodola");
+        request.setUsername("lord_boj");
+
+        //Act
+        RegisterUserResponse response = authServices.register(request);
         User user = users.findByUsername("lord_boj").get();
+
+        //Assert
         assertNotEquals("Password1!", user.getPassword());
     }
 
